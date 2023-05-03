@@ -15,10 +15,35 @@
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age){
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+};
 
-}
+Person.prototype.eat = function(edible) {
+  if(this.stomach.length < 10){
+    this.stomach.push(edible);
+  };
+};
 
+Person.prototype.poop = function() {
+  this.stomach = [];
+};
+
+Person.prototype.toString = function() {
+  return `${this.name}, ${this.age}`;
+};
+
+// testing the code;
+const mary = new Person('Mary', 50);
+console.log('Task1, test1:', mary.toString());
+
+const person1 = new Person('Alice', 30);
+person1.eat('apple');
+person1.eat('pasta');
+person1.poop();
+console.log('Task1, test2:', person1.stomach);
 
 /*
   TASK 2
