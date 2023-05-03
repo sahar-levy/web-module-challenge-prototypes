@@ -38,18 +38,16 @@ Person.prototype.toString = function() {
 // testing the code;
 const mary = new Person('Mary', 50);
 console.log('Task1, test1:', mary.toString());
-
-const person1 = new Person('Alice', 30);
-person1.eat('apple');
-person1.eat('pasta');
-person1.poop();
-console.log('Task1, test2:', person1.stomach);
+mary.eat('pizza');
+console.log('Task1, test2:',mary.stomach);
+mary.poop();
+console.log('Task1, test3:', mary.stomach);
 
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
     - All instances built with Car:
-        + should initialize with an `tank` at 0
+        + should initialize with a `tank` at 0
         + should initialize with an `odometer` at 0
     - Give cars the ability to get fueled with a `.fill(gallons)` method
       + should take 'gallons' as an parameter which will take number of gallons as an argument
@@ -61,9 +59,28 @@ console.log('Task1, test2:', person1.stomach);
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+};
 
-}
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons;
+};
+
+Car.prototype.drive = function(distance) {
+  const driveableMiles = this.tank * this.milesPerGallon; //how much gas is in the tank
+  if(distance <= driveableMiles){ //if the dist is < or = to miles available, then ok to drive
+    this.odometer = this.odometer + distance; //odometer is updated
+    this.tank = this.tank - (distance / this.driveableMiles); //fuel goes down; removed from tank
+  }else{
+    this.odometer = this.odometer + driveableMiles; //if drove more than driveable miles, odometer is changed
+    this.tank = 0;  //tank is empty since no more driveable miles left
+    return `I ran out of fuel at ${this.odometer} miles`;
+  };
+};
 
 
 /*
